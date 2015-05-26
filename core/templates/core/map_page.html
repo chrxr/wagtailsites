@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags core_tags %}
+
+{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
+
+{% block content %}
+
+	{% for companies in self.companies %}
+  		{{ companies.title }}
+	{% endfor %}
+
+{% endblock %}

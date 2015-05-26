@@ -57,7 +57,8 @@ class HomePage(Page, IndexPage):
         'core.CompanyIndex',
         'core.WagtailCompanyPage',
         'core.WagtailSitePage',
-        'core.SubmitFormPage'
+        'core.SubmitFormPage',
+        'core.MapPage'
     ]
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -408,3 +409,29 @@ WagtailSitePage.content_panels = [
 ]
 
 WagtailSitePage.promote_panels = [FieldPanel('is_featured'), ] + WagtailPage.promote_panels
+
+
+
+class MapPage(WagtailPage):
+    parent_types = ['core.HomePage']
+
+    class Meta:
+        verbose_name = "Map page"
+        description = "A map view of all the companies and sites currently using Wagtail"
+
+    @property
+    def companies(self):
+        return WagtailCompanyPage.objects.live()
+
+    @property
+    def sites(self):
+        return WagtailSitePage.objects.live()
+
+
+MapPage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('body', classname="full"),
+    FieldPanel('tags'),
+]
+
+MapPage.promote_panels = WagtailPage.promote_panels
