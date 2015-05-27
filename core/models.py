@@ -198,6 +198,8 @@ class WagtailPage(Page):
     )
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=PageTag, blank=True)
+    latitude = models.CharField(max_length=255, blank=True)
+    longitude = models.CharField(max_length=255, blank=True)
     search_fields = ()
 
     @property
@@ -244,6 +246,10 @@ WagtailPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('body', classname="full"),
     FieldPanel('tags'),
+    MultiFieldPanel([
+        FieldPanel('latitude'),
+        FieldPanel('longitude'),
+    ], "Map coordinates"),
 ]
 
 WagtailPage.promote_panels = [
@@ -343,6 +349,10 @@ WagtailCompanyPage.content_panels = [
     FieldPanel('github_url'),
     FieldPanel('twitter_url'),
     ImageChooserPanel('logo'),
+    MultiFieldPanel([
+        FieldPanel('latitude'),
+        FieldPanel('longitude'),
+    ], "Map coordinates"),
     FieldPanel('tags'),
 ]
 
@@ -405,6 +415,10 @@ WagtailSitePage.content_panels = [
     ImageChooserPanel('image_tablet'),
     ImageChooserPanel('image_phone'),
     FieldPanel('body', classname="full"),
+    MultiFieldPanel([
+        FieldPanel('latitude'),
+        FieldPanel('longitude'),
+    ], "Map coordinates"),
     FieldPanel('tags'),
 ]
 

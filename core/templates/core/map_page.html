@@ -1,12 +1,26 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags core_tags %}
+{% load wagtailcore_tags wagtailimages_tags core_tags compress static %}
 
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
 {% block content %}
 
-	{% for companies in self.companies %}
-  		{{ companies.title }}
-	{% endfor %}
 
+<div id="map-canvas"></div>
+	<div id="button-left" class="button"><p>&lt;</p></div>
+	<div id="button-right" class="button"><p>&gt;</p></div>
+<p id="map-text" class="text"></p>
+
+{% for company in self.companies %}
+ <h2 class='map_point' data-lat="{{ company.latitude }}" data-lon="{{ company.longitude }}" data-maplabel="{{ company.title }}">{{ company.title }}</h2>
+{% endfor %}
+
+{% for site in self.sites %}
+ <h2 class='map_point' data-lat="{{ site.latitude }}" data-lon="{{ site.longitude }}" data-maplabel="{{ site.title }}">{{ site.title }}</h2>
+{% endfor %}
+
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmhicPEFwlk5OSIw2glU_o1YscGeci1Uc"></script>
+    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}
